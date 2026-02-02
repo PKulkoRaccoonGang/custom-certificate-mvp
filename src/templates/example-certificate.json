@@ -1,0 +1,142 @@
+{
+  "id": "certificate-of-achievement-001",
+  "name": "Certificate of Achievement",
+  "description": "A simple certificate template with editable name and date fields",
+  "version": "1.0.0",
+  "canvas": {
+    "width": 1000,
+    "height": 707
+  },
+  "background": {
+    "type": "color",
+    "value": "#f8f9fa"
+  },
+  "elements": [
+    {
+      "type": "shape",
+      "id": "border-rect",
+      "shape": "rectangle",
+      "position": {
+        "left": 30,
+        "top": 30
+      },
+      "size": {
+        "width": 940,
+        "height": 647
+      },
+      "style": {
+        "fill": "transparent",
+        "stroke": "#2c3e50",
+        "strokeWidth": 3
+      }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "content": "Certificate of Achievement",
+      "editable": false,
+      "position": {
+        "left": 500,
+        "top": 100
+      },
+      "style": {
+        "fontFamily": "Georgia",
+        "fontSize": 48,
+        "fontWeight": "bold",
+        "fontStyle": "normal",
+        "fill": "#2c3e50",
+        "textAlign": "center"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "content": "This certificate is presented to",
+      "editable": false,
+      "position": {
+        "left": 500,
+        "top": 200
+      },
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": 20,
+        "fontWeight": "normal",
+        "fontStyle": "italic",
+        "fill": "#7f8c8d",
+        "textAlign": "center"
+      }
+    },
+    {
+      "type": "text",
+      "id": "recipient-name",
+      "content": "{{recipientName}}",
+      "editable": true,
+      "position": {
+        "left": 500,
+        "top": 280
+      },
+      "style": {
+        "fontFamily": "Georgia",
+        "fontSize": 42,
+        "fontWeight": "bold",
+        "fontStyle": "normal",
+        "fill": "#3498db",
+        "textAlign": "center"
+      }
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "content": "For outstanding performance and dedication in\n{{courseName}}",
+      "editable": true,
+      "position": {
+        "left": 500,
+        "top": 380
+      },
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": 18,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "fill": "#34495e",
+        "textAlign": "center"
+      }
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "content": "Date: {{date}}",
+      "editable": true,
+      "position": {
+        "left": 150,
+        "top": 550
+      },
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": 16,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "fill": "#7f8c8d",
+        "textAlign": "left"
+      }
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "content": "{{instructorName}}\nInstructor",
+      "editable": true,
+      "position": {
+        "left": 750,
+        "top": 550
+      },
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": 16,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "fill": "#7f8c8d",
+        "textAlign": "center"
+      }
+    }
+  ]
+}

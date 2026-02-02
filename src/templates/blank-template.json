@@ -1,0 +1,15 @@
+{
+  "id": "blank-template-001",
+  "name": "Blank Template",
+  "description": "A blank A4 landscape canvas to start from scratch",
+  "version": "1.0.0",
+  "canvas": {
+    "width": 1000,
+    "height": 707
+  },
+  "background": {
+    "type": "color",
+    "value": "#ffffff"
+  },
+  "elements": []
+}
