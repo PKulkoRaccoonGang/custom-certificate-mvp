@@ -1,4 +1,11 @@
-import { Textbox, Image as FabricImage } from 'fabric'
+import {
+  Textbox,
+  Image as FabricImage,
+  Rect,
+  Circle,
+  Polygon,
+  Line,
+} from 'fabric'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from './initFabric'
 
 /**
@@ -78,4 +85,104 @@ export function deleteSelectedElement(canvas) {
     canvas.remove(active)
     canvas.discardActiveObject()
   }
+}
+
+// ---------------------------------------------------------------------------
+// Shapes
+// ---------------------------------------------------------------------------
+
+const SHAPE_DEFAULTS = {
+  fill: '#3b82f6',
+  stroke: '#1d4ed8',
+  strokeWidth: 2,
+}
+
+function addRectangle(canvas) {
+  const rect = new Rect({
+    left: CANVAS_WIDTH / 2,
+    top: CANVAS_HEIGHT / 2,
+    originX: 'center',
+    originY: 'center',
+    width: 200,
+    height: 150,
+    ...SHAPE_DEFAULTS,
+  })
+
+  canvas.add(rect)
+  canvas.setActiveObject(rect)
+}
+
+function addCircle(canvas) {
+  const circle = new Circle({
+    left: CANVAS_WIDTH / 2,
+    top: CANVAS_HEIGHT / 2,
+    originX: 'center',
+    originY: 'center',
+    radius: 75,
+    ...SHAPE_DEFAULTS,
+  })
+
+  canvas.add(circle)
+  canvas.setActiveObject(circle)
+}
+
+function addTriangle(canvas) {
+  const width = 160
+  const height = 140
+
+  // Isosceles triangle: apex at top-centre, base at bottom.
+  // Points are in the object's local coordinate system (origin at bbox top-left).
+  const triangle = new Polygon(
+    [
+      { x: width / 2, y: 0 },
+      { x: 0, y: height },
+      { x: width, y: height },
+    ],
+    {
+      left: CANVAS_WIDTH / 2,
+      top: CANVAS_HEIGHT / 2,
+      originX: 'center',
+      originY: 'center',
+      ...SHAPE_DEFAULTS,
+    }
+  )
+
+  canvas.add(triangle)
+  canvas.setActiveObject(triangle)
+}
+
+function addLine(canvas) {
+  // Endpoints are absolute canvas coordinates; the midpoint lands at centre.
+  const line = new Line(
+    [
+      CANVAS_WIDTH / 2 - 100,
+      CANVAS_HEIGHT / 2,
+      CANVAS_WIDTH / 2 + 100,
+      CANVAS_HEIGHT / 2,
+    ],
+    {
+      stroke: '#e74c3c',
+      strokeWidth: 3,
+    }
+  )
+
+  canvas.add(line)
+  canvas.setActiveObject(line)
+}
+
+const SHAPE_CREATORS = {
+  rectangle: addRectangle,
+  circle: addCircle,
+  triangle: addTriangle,
+  line: addLine,
+}
+
+/**
+ * Add a shape element to the centre of the canvas
+ * @param {Canvas} canvas - Fabric.js canvas instance
+ * @param {'rectangle'|'circle'|'triangle'|'line'} type - Shape type
+ */
+export function addShapeElement(canvas, type) {
+  const creator = SHAPE_CREATORS[type]
+  if (creator) creator(canvas)
 }

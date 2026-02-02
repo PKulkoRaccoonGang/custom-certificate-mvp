@@ -1,9 +1,18 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useCanvasContext } from '../context/CanvasContext'
+
+const SHAPES = [
+  { type: 'rectangle', label: 'Rectangle' },
+  { type: 'circle', label: 'Circle' },
+  { type: 'triangle', label: 'Triangle' },
+  { type: 'line', label: 'Line' },
+]
 
 export default function Sidebar() {
   const fileInputRef = useRef(null)
-  const { activeObject, addText, addImage, deleteSelected } = useCanvasContext()
+  const [showShapes, setShowShapes] = useState(false)
+  const { activeObject, addText, addShape, addImage, deleteSelected } =
+    useCanvasContext()
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0]
@@ -33,9 +42,32 @@ export default function Sidebar() {
             Text
           </button>
 
-          <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition-colors">
-            Shapes
-          </button>
+          {/* Shapes toggle + collapsible sub-menu */}
+          <div>
+            <button
+              onClick={() => setShowShapes((s) => !s)}
+              className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition-colors"
+            >
+              Shapes
+            </button>
+
+            {showShapes && (
+              <div className="ml-6 mt-1 space-y-1">
+                {SHAPES.map(({ type, label }) => (
+                  <button
+                    key={type}
+                    onClick={() => {
+                      addShape(type)
+                      setShowShapes(false)
+                    }}
+                    className="w-full text-left px-3 py-1.5 text-sm rounded text-gray-300 hover:bg-gray-800 transition-colors"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
           <button
             onClick={() => fileInputRef.current?.click()}

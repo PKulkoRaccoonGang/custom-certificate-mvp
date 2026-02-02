@@ -176,6 +176,86 @@ function ImageProperties({ object, canvasRef }) {
   )
 }
 
+const SHAPE_TYPES = new Set(['rect', 'circle', 'polygon', 'line'])
+
+function ShapeProperties({ object, canvasRef }) {
+  const isLine = object.type === 'line'
+  const [fill, setFill] = useState(toHex(object.fill))
+  const [stroke, setStroke] = useState(toHex(object.stroke))
+  const [strokeWidth, setStrokeWidth] = useState(String(object.strokeWidth))
+
+  useEffect(() => {
+    setFill(toHex(object.fill))
+    setStroke(toHex(object.stroke))
+    setStrokeWidth(String(object.strokeWidth))
+  }, [object])
+
+  const update = (prop, value) => {
+    object.set(prop, value)
+    canvasRef.current?.renderAll()
+  }
+
+  return (
+    <div className="space-y-5">
+      {!isLine && (
+        <div>
+          <label className="block text-xs text-gray-400 mb-1">
+            Fill Color
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="color"
+              value={fill}
+              onChange={(e) => {
+                setFill(e.target.value)
+                update('fill', e.target.value)
+              }}
+              className="w-8 h-8 p-0 rounded cursor-pointer border border-gray-700"
+            />
+            <span className="text-xs text-gray-400">{fill}</span>
+          </div>
+        </div>
+      )}
+
+      <div>
+        <label className="block text-xs text-gray-400 mb-1">
+          Stroke Color
+        </label>
+        <div className="flex items-center gap-2">
+          <input
+            type="color"
+            value={stroke}
+            onChange={(e) => {
+              setStroke(e.target.value)
+              update('stroke', e.target.value)
+            }}
+            className="w-8 h-8 p-0 rounded cursor-pointer border border-gray-700"
+          />
+          <span className="text-xs text-gray-400">{stroke}</span>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-xs text-gray-400 mb-1">
+          Stroke Width
+        </label>
+        <input
+          type="number"
+          value={strokeWidth}
+          min={0}
+          max={50}
+          onChange={(e) => {
+            setStrokeWidth(e.target.value)
+            const num = Number(e.target.value)
+            if (num >= 0) update('strokeWidth', num)
+          }}
+          className="w-full bg-gray-800 text-white text-sm rounded px-2 py-1.5 border border-gray-700 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function PropertiesPanel() {
   const { activeObject, canvasRef } = useCanvasContext()
 
@@ -194,6 +274,8 @@ export default function PropertiesPanel() {
           <TextProperties object={activeObject} canvasRef={canvasRef} />
         ) : activeObject.type === 'image' ? (
           <ImageProperties object={activeObject} canvasRef={canvasRef} />
+        ) : SHAPE_TYPES.has(activeObject.type) ? (
+          <ShapeProperties object={activeObject} canvasRef={canvasRef} />
         ) : (
           <p className="text-xs text-gray-500 text-center mt-8">
             No editable properties for this element

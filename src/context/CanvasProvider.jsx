@@ -4,6 +4,7 @@ import {
   addTextElement,
   addImageFromFile,
   deleteSelectedElement,
+  addShapeElement,
 } from '../fabric/elementActions'
 
 export default function CanvasProvider({ children }) {
@@ -27,6 +28,12 @@ export default function CanvasProvider({ children }) {
     }
   }, [])
 
+  const addShape = useCallback((type) => {
+    if (canvasRef.current) {
+      addShapeElement(canvasRef.current, type)
+    }
+  }, [])
+
   const deleteSelected = useCallback(() => {
     if (canvasRef.current) {
       deleteSelectedElement(canvasRef.current)
@@ -41,6 +48,7 @@ export default function CanvasProvider({ children }) {
         setActiveObject,
         addText,
         addImage,
+        addShape,
         deleteSelected,
       }}
     >
